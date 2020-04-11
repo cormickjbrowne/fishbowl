@@ -17,6 +17,5 @@ export interface State {
   currentActorId?: string;
   players: {};
   game?: Game;
-  timerStarted: boolean;
   timeLeft: number;
 }

@@ -21,7 +21,6 @@ export class NewGameComponent implements OnInit {
   public clues: string[] = [];
   public actingPlayer: Player;
   public timeLeft: number;
-  public timerStarted = false;
 
   constructor(private gameService: GameService, private route: ActivatedRoute) {}
 
@@ -37,8 +36,11 @@ export class NewGameComponent implements OnInit {
       this.players = Object.values(state.players);
       this.actingPlayer = state.players[state.currentActorId];
       this.timeLeft = state.timeLeft;
-      this.timerStarted = state.timerStarted;
     });
+  }
+
+  get timerStarted() {
+    return this.state && this.state.status === 'playing-acting';
   }
 
   get currentPlayerName() {

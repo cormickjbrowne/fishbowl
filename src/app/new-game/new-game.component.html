@@ -34,7 +34,7 @@
     </ng-container>
   </ul>
 </ng-container>
-<ng-container *ngIf="state.status === 'player-ready'">
+<ng-container *ngIf="state.status === 'player-ready' || state.status === 'playing-acting'">
   <ng-container *ngIf="isActing">
     <div>Acting...</div>
     <button *ngIf="!timerStarted" (click)="startTimer()">Start</button>

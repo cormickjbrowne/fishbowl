@@ -17,7 +17,6 @@ const initialState: State = {
  currentActorId: undefined,
  players: {},
  game: undefined,
- timerStarted: false,
  timeLeft: waitTime
 };
 
@@ -104,7 +103,7 @@ export class GameService {
 
       socket.on('acting-started', () => {
         this.setState({
-          timerStarted: true,
+          status: 'playing-acting',
           timeLeft: waitTime
         });
 
@@ -121,7 +120,6 @@ export class GameService {
 
       socket.on('acting-finished', (nextActingPlayerId: string) => {
         this.setState({
-          timerStarted: false,
           timeLeft: 0,
           currentActorId: nextActingPlayerId,
           status: 'player-ready'
@@ -156,6 +154,9 @@ export class GameService {
     this.socket.emit('start-acting', { gameId: this.state.game.id});
   }
 
-  nextClue() { }
-  skipClue() { }
+  nextClue() {
+
+  }
+
+  skipClue() {}
 }
