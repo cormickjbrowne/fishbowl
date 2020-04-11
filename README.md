@@ -1,3 +1,20 @@
+How should I model game state and changes?
+When a player takes an action whats the best way to udate the other players?
+For example should I send the full state down to the client whenever any action occurs? Or should I just send the message with the minimum info each client needs to update its own state?
+
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.13.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/7.13.1/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+
+
 # Fishbowl
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.

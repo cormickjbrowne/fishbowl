@@ -1,0 +1,18 @@
+{
+  "/server": {
+    "target": "http://localhost:3000",
+    "secure": false,
+    "pathRewrite": {
+      "^/server": ""
+    }
+  },
+  "/socket.io": {
+    "target": "http://localhost:5000",
+    "secure": false,
+    "ws": true
+  },
+  "/sockjs-node/*": {
+    "target": "http://localhost:5000",
+    "secure": false
+  }
+}

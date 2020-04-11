@@ -1,0 +1,56 @@
+<h1>Game Room</h1>
+<div *ngIf="state">Status: {{state.status}}</div>
+<div *ngIf="currentPlayerName">{{currentPlayerName}}</div>
+
+<ng-container *ngIf="state.status === 'joining'">
+  <input [(ngModel)]="playerName" placeholder="What's your name?"/>
+  <button (click)="joinGame()">Submit</button>
+</ng-container>
+
+<ng-container *ngIf="state.status === 'waiting-for-players'">
+  <div>Players:</div>
+  <ul>
+    <li *ngFor="let player of players">{{player.name}}</li>
+  </ul>
+  <button (click)="startGame()">Start Game</button>
+</ng-container>
+
+<ng-container *ngIf="state.status === 'writing-clues'">
+  <input [(ngModel)]="clue"/>
+  <button (click)="saveClue()" [disabled]="clues.length === 5">Enter</button>
+  <button (click)="submitClues()" [disabled]="clues.length < 5" >Submit Clues</button>
+  <ul>
+    <ng-container *ngFor="let player of players">
+      <li *ngIf="player.status === 'ready'">{{player.name}}</li>
+    </ng-container>
+  </ul>
+</ng-container>
+
+<ng-container *ngIf="state.status === 'waiting-for-clues'">
+  <div>Waiting for other players</div>
+  <ul>
+    <ng-container *ngFor="let player of players">
+      <li *ngIf="player.status === 'ready'">{{player.name}}</li>
+    </ng-container>
+  </ul>
+</ng-container>
+<ng-container *ngIf="state.status === 'player-ready'">
+  <ng-container *ngIf="isActing">
+    <div>Acting...</div>
+    <button *ngIf="!timerStarted" (click)="startTimer()">Start</button>
+    <ng-container *ngIf="timerStarted">
+      <div>Time remaining: {{timeLeft}}</div>
+      <button>Got It!</button>
+      <button>Skip</button>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!isActing">
+    <div>Guessing...</div>
+    <div *ngIf="!timerStarted">Waiting for actor: {{actingPlayer.name}}</div>
+    <ng-container *ngIf="timerStarted">
+      <div>Time remaining: {{timeLeft}}</div>
+      <button>Got It!</button>
+      <button>Skip</button>
+    </ng-container>
+  </ng-container>
+</ng-container>
