@@ -1,6 +1,9 @@
 export interface Player {
-  name: string;
   id: string;
-  gameId?: string;
-  status: string;
+  name: string;
+  teamId: string;
+  gameId: string;
+  clueIds: string[];
+  turnIds: string[];
+  attemptIds: string[];
 }

@@ -13,7 +13,9 @@ import { GameService } from '../game.service';
 })
 export class NewGameComponent implements OnInit {
 
-  public state: State;
+  public game: Game;
+  public gameId: string;
+  public currentPlayerId: string;
   public socket: any;
   public playerName: string;
   public players: Player[] = [];
@@ -21,41 +23,68 @@ export class NewGameComponent implements OnInit {
   public clues: string[] = [];
   public actingPlayer: Player;
   public timeLeft: number;
+  public numClues = 2;
 
   constructor(private gameService: GameService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.gameService.setState({ status: 'joining' });
-
     this.route.params.subscribe((params) => {
-      this.gameService.getGame(params.id);
+      this.gameId = params.id;
     });
 
     this.gameService.state$.subscribe((state: State) => {
-      this.state = state;
-      this.players = Object.values(state.players);
-      this.actingPlayer = state.players[state.currentActorId];
-      this.timeLeft = state.timeLeft;
+      const { game, currentPlayerId } = state;
+      this.game = game;
+      this.currentPlayerId = currentPlayerId;
+      if (!game) return;
+      this.players = Object.values(game.players);
+      this.actingPlayer = game.players[game.currentActorId];
+      this.timeLeft = game.timeRemaining;
     });
   }
 
-  get timerStarted() {
-    return this.state && this.state.status === 'playing-acting';
+  get teams() {
+    return this.game.teamIds.map(id => this.game.teams[id]);
+  }
+
+  getCluesGuessedThisTurn() {
+    return Object.values(this.game.attempts).filter(attempt => {
+     return attempt.turnId === this.game.currentTurnId
+      && attempt.status === 'guessed';
+    }).length;
+  }
+
+  getPointsForTeam(teamId) {
+    return Object.values(this.game.attempts).filter(attempt => {
+     return attempt.teamId === teamId
+      && attempt.status === 'guessed';
+    }).length;
+  }
+
+  get currentPlayer() {
+    return this.game.players[this.currentPlayerId];
+  }
+
+  getActor() {
+    return this.game.players[this.game.currentActorId];
+  }
+
+  getCurrentClue() {
+    return this.game.clues[this.game.currentClueId];
   }
 
   get currentPlayerName() {
-    const currentPlayerId = this.state && this.state.currentPlayerId || '';
-    const players = this.state && this.state.players || {};
-    const player = players[currentPlayerId];
+    const players = this.game && this.game.players || {};
+    const player = players[this.currentPlayerId];
     return player && player.name || '';
   }
 
-  get isActing() {
-    return this.state.currentPlayerId === this.state.currentActorId;
+  get isActor() {
+    return this.currentPlayerId === this.game.currentActorId;
   }
 
   joinGame() {
-    this.gameService.joinGame(this.playerName);
+    this.gameService.joinGame(this.playerName, this.gameId);
     this.playerName = '';
   }
 
@@ -69,12 +98,59 @@ export class NewGameComponent implements OnInit {
     this.clues = [];
   }
 
-  startGame() {
+  pickTeams() {
+    this.gameService.pickTeams();
+  }
+
+  startWritingClues() {
     this.gameService.startEnteringClues();
+  }
+
+  startGame() {
+    this.gameService.startGame();
+  }
+
+  startTurn() {
+    this.gameService.startTurn();
+  }
+
+  startNextRound() {
+    this.gameService.startNextRound();
   }
 
   startTimer() {
     this.gameService.startActing();
+  }
+
+  guessedClue() {
+    this.gameService.guessedClue();
+  }
+
+  skipClue() {
+    this.gameService.skipClue();
+  }
+
+  getCurrentRoundId() {
+    return this.game.roundIds[this.game.currentRoundIndex];
+  }
+
+  get numCluesRemaining() {
+     const clues = Object.values(this.game.clues);
+     const currentRoundId = this.getCurrentRoundId();
+     return clues.filter(clue => !clue.attemptIds.map(id => this.game.attempts[id]).find(attempt => attempt.roundId === currentRoundId && attempt.status === 'guessed')).length;
+  }
+
+  get numCluesGuessedThisTurn() {
+    const attempts = Object.values(this.game.attempts);
+    return attempts.filter(attempt => attempt.turnId === this.game.currentTurnId && attempt.status === 'guessed').length;
+  }
+
+  get currentRound() {
+    return this.game.rounds[this.getCurrentRoundId()];
+  }
+
+  newGame() {
+    this.gameService.newGame();
   }
 }
 

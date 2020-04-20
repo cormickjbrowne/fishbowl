@@ -8,20 +8,11 @@ const { Player } = require('./models/player');
 const bodyParser = require('body-parser');
 
 const state = {
-  rooms: [],
   games: {
     asdf: new Game('asdf')
   },
   players: {},
-  sockets: {},
-  clues: []
-};
-
-const getRandomPlayer = (gameId) => {
-  const game = state.games[gameId];
-  const randomIndex = Math.floor(Math.random() * game.playerIds.length);
-  const randomPlayerId = game.playerIds[randomIndex];
-  return state.players[randomPlayerId];
+  sockets: {}
 };
 
 app.use(bodyParser.json());
@@ -60,99 +51,65 @@ app.put('/game/:id', (req, res) => {
   res.json(game);
 });
 
-app.post('/player', (req, res) => {
-  const { name, id } = req.body;
-  const player = new Player(name, id);
-  state.players[id] = player;
-  res.json(player);
-});
-
-app.post('/clues', (req, res) => {
-  const { clues, playerId, gameId } = req.body;
-  if (!Array.isArray(clues)) {
-    throw new Error('POST /clues { body: { clues } } is not an Array');
-  }
-  state.clues = state.clues.concat(clues); // TODO eventually this needs to change
+app.post('/game/remove-player', (req, res) => {
+  const { gameId, playerId } = req.body;
   const game = state.games[gameId];
   if (!game) {
     res.status(404);
-    return res.send(`Received POST /clues but could not find game with gameId: ${gameId}`);
+    return res.json({
+      message: `Could not find game with id: "${gameId}"`
+    });
   }
-
-  const player = state.players[playerId];
-  player.addClues(clues);
-
-  io.emit('player-ready', playerId);
-  console.log('Got clues', clues, playerId, gameId);
-  res.json({ game: state.games[gameId] });
-
-  const players = game.playerIds.map(id => state.players[id]);
-
-  const randomPlayer = getRandomPlayer(gameId);
-  if (players.every(player => player.clues.length === 5)) {
-    io.emit('status-change', { status: 'player-ready', actingPlayerId: randomPlayer.id });
+  const player = game.players[playerId];
+  if (!player) {
+    res.status(404);
+    return res.json({
+      message: `Could not find player with id: "${playerId}"`
+    });
   }
+  game.removePlayer(player);
+  res.status(200);
+  res.send(game);
 });
 
 io.on('connection', function(socket){
+  const player = new Player(socket.id);
+  state.players[player.id] = player;
   state.sockets[socket.id] = socket;
+  let game;
+
+  const updateClient = () => {
+    socket.to(game.id).emit('state-change', game);
+    socket.emit('state-change', game);
+  }
 
   console.log('a user connected');
 
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
+  socket.on('join', ({ gameId, playerName }) => {
+    game = state.games[gameId];
+    if (!game) { console.log('No Game!'); return; }
+    socket.join(gameId);
+    game.events.on('state-change', updateClient)
+    player.setName(playerName);
+    game.addPlayer(player);
   });
 
-  socket.on('join', (playerId, gameId) => {
-   const players = state.players;
-   const player = players[playerId];
-   const game = state.games[gameId];
-   if (!game) { console.log('No Game!'); return; }
-   game.addPlayer(playerId);
-   player.joinGame(gameId);
-   console.log(`New player: ${player.name}`);
-   socket.emit('players', Object.values(players).filter(player => player.id !== playerId));
-   io.emit('player', player);
-  });
-
+  socket.on('pick-teams', () => game.pickTeams());
+  socket.on('change-teams', ({ teams }) => game.changeTeams(teams));
+  socket.on('start-entering-clues', () => game.startEnteringClues());
+  socket.on('submit-clues', ({ clues }) => game.addClues(clues, player));
+  socket.on('start-game', () => game.startGame());
+  socket.on('start-turn', () => game.startActing());
+  socket.on('clue-guessed', () => game.clueGuessed());
+  socket.on('clue-skipped', () => game.clueSkipped());
+  socket.on('next-round', () => game.nextRound());
+  socket.on('new-game', () => game.newGame());
   socket.on('disconnect', () => {
-    const { id } = socket;
-    const player = state.players[id];
-
-    if (player) {
-      const game = state.games[player.gameId];
-      if (game) {
-          game.removePlayer(id);
-      }
-      player.leaveGame();
-      player.resetClues();
+    if (game) {
+      game.removePlayer(player)
     }
-
-    delete state.players[id];
-    delete state.sockets[id];
-    io.emit('player-left', id);
+    delete state.sockets[socket.id];
   });
-
-  socket.on('start-acting', ({ gameId }) => {
-    io.emit('acting-started');
-    let timeLeft = 5;
-    const intervalId = setInterval(() => {
-      timeLeft--;
-      if (timeLeft <= 0) {
-        clearInterval(intervalId);
-        io.emit('acting-finished', getRandomPlayer(gameId).id);
-        return;
-      }
-    }, 1000);
-  });
-});
-
-io.on('join', (name) => {
-  console.log(`New player: ${name}`);
-  const player = new Player(name);
-  state.players[name] = player;
-  console.log(`Players: ${JSON.stringify(state.players, null, 2)}`);
-  io.emit('player', player);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
