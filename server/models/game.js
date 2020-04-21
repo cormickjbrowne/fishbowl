@@ -6,10 +6,10 @@ const { Clue } = require('./clue');
 const { Turn } = require('./turn');
 const { Attempt } = require('./attempt');
 
-const NUM_CLUES = 2;
+const NUM_CLUES = 4;
 const NUM_TEAMS = 2;
 const NUM_ROUNDS = 4;
-const NUM_SECONDS_PER_TURN = 15;
+const NUM_SECONDS_PER_TURN = 30;
 
 class Game {
   constructor(id) {
@@ -72,7 +72,7 @@ class Game {
     let teamId;
     let numPlayers = Number.POSITIVE_INFINITY;
     for (let team of teams) {
-      const numPlayersOnTeam = team.playerIds.length;
+      const numPlayersOnTeam = team.playerIds.filter(id => this.get('player', id).status === 'playing').length;
       if (numPlayersOnTeam < numPlayers) {
         numPlayers = numPlayersOnTeam;
         teamId = team.id;
@@ -82,11 +82,15 @@ class Game {
   }
 
   addPlayer(player) {
-    const team = this.getTeamWithLeastPlayers();
-    team.addPlayer(player);
-    player.joinTeam(team.id);
-    player.joinGame(this.id);
-    this.players[player.id] = player;
+    if (this.players[player.id]) {
+      player.rejoinGame();
+    } else {
+      const team = this.getTeamWithLeastPlayers();
+      team.addPlayer(player);
+      player.joinTeam(team.id);
+      player.joinGame(this.id);
+      this.players[player.id] = player;
+    }
     this.emitStateChange();
   }
 
@@ -102,12 +106,12 @@ class Game {
     this.emitStateChange();
   }
 
-  removePlayer(player) {
+  removePlayer(player, socketId) {
     console.log('player left:', player.name);
     const team = this.teams[player.teamId];
-    team.removePlayer(player.id);
-    player.leaveGame();
+    player.leaveGame(socketId);
     if (this.status === 'waiting-for-players-to-join') {
+      team.removePlayer(player.id);
       this.deletePlayer(player);
     }
     this.emitStateChange();
@@ -174,7 +178,8 @@ class Game {
     this.emitStateChange();
   }
 
-  addClues(clueValues, player) {
+  addClues(clueValues, playerId) {
+    const player = this.get('player', playerId);
     const clues = clueValues.map(value => new Clue({ value, playerId: player.id, gameId: this.id }));
     clues.forEach(clue => {
       this.clues[clue.id] = clue;

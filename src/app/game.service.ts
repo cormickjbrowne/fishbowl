@@ -57,6 +57,10 @@ export class GameService {
     (window as any).state = this.state;
   }
 
+  setPlayerId(currentPlayerId: string) {
+    this.setState({ currentPlayerId });
+  }
+
   getGame(id: string): void {
     this.http.get<Game>(`/server/game/${id}`)
     .pipe(catchError((err) => {
@@ -73,12 +77,34 @@ export class GameService {
     this.socket = socket;
 
     socket.on('connect', () => {
-      this.setState({ currentPlayerId: socket.id });
-      socket.emit('join', { playerName, gameId });
+      socket.emit('join', { gameId, playerName, playerId: this.state.currentPlayerId });
+    });
+
+    socket.on('reconnect', () => {
+      socket.emit('join', { gameId, playerId: this.state.currentPlayerId });
     });
 
     socket.on('state-change', (game) => {
       this.setState({ game });
+    });
+
+    socket.on('player-id', (currentPlayerId) => {
+      this.setState({ currentPlayerId });
+      localStorage.setItem(`${gameId}-currentPlayerId`, this.state.currentPlayerId);
+    });
+
+    socket.on('game-not-found', () => {
+      this.router.navigateByUrl('/');
+    });
+
+    socket.on('player-not-found', () => {
+      console.log('Player not found');
+      this.setState({ currentPlayerId: undefined });
+      localStorage.removeItem(`${gameId}-currentPlayerId`);
+    });
+
+    socket.on('disconnect', () => {
+      this.router.navigateByUrl('/');
     });
   }
 
@@ -91,7 +117,7 @@ export class GameService {
   }
 
   submitClues(clues: string[]) {
-    this.socket.emit('submit-clues', { clues });
+    this.socket.emit('submit-clues', { clues, playerId: this.state.currentPlayerId });
   }
 
   startGame() {
@@ -120,5 +146,9 @@ export class GameService {
 
   newGame() {
     this.socket.emit('new-game');
+  }
+
+  clearState() {
+    this.setState(initialState);
   }
 }

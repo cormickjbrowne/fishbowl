@@ -1,9 +1,10 @@
-const NUM_CLUES = 5;
+const { generateHash } = require('../utils');
 
 class Player {
-  constructor(id) {
-      this.id = id;
-      this.name = null;
+  constructor(name, socketId) {
+      this.id = generateHash();
+      this.socketId = null;
+      this.name = name;
       this.teamId = null;
       this.gameId = null;
       this.clueIds = [];
@@ -20,8 +21,15 @@ class Player {
     this.gameId = id;
   }
 
-  leaveGame() {
-    this.status = 'left-game';
+  leaveGame(socketId) {
+    if (socketId === this.socketId) {
+      this.status = 'left-game';
+      this.socketId = null;
+    }
+  }
+
+  rejoinGame() {
+    this.status = 'playing';
   }
 
   joinTeam(id) {

@@ -72,9 +72,20 @@ app.post('/game/remove-player', (req, res) => {
   res.send(game);
 });
 
+app.post('/game/boot-player', (req, res) => {
+  const { gameId, playerId } = req;
+  const player = state.players[playerId];
+  if (!player) {
+    res.status(404);
+    return res.send({ message: 'Player not found.' });
+  }
+  const socket = state.sockets[player.socketId];
+  socket.emit('player-not-found');
+  res.status(200);
+  res.send({ message: 'ok' });
+});
+
 io.on('connection', function(socket){
-  const player = new Player(socket.id);
-  state.players[player.id] = player;
   state.sockets[socket.id] = socket;
   let game;
 
@@ -85,19 +96,38 @@ io.on('connection', function(socket){
 
   console.log('a user connected');
 
-  socket.on('join', ({ gameId, playerName }) => {
-    game = state.games[gameId];
-    if (!game) { console.log('No Game!'); return; }
-    socket.join(gameId);
-    game.events.on('state-change', updateClient)
-    player.setName(playerName);
-    game.addPlayer(player);
+  socket.on('join', ({ gameId, playerName, playerId }) => {
+      console.log('Joining game...');
+       game = state.games[gameId];
+       if (!game) { console.log('Game not found.'); return socket.emit('game-not-found'); }
+       let player = game.players[playerId];
+       if (player) {
+        console.log('Found player.');
+        const oldSocket = state.sockets[player.socketId];
+        if (oldSocket) {
+          oldSocket.disconnect();
+          delete state.sockets[oldSocket.id];
+        }
+       } else if (playerName) {
+        console.log('Creating new player...');
+        player = new Player(playerName);
+       } else {
+        console.log('Player not found. Clearing old player id.');
+        return socket.emit('player-not-found');
+       }
+       socket.playerId = player.id;
+       player.socketId = socket.id;
+       socket.emit('player-id', player.id);
+       state.players[player.id] = player;
+       socket.join(gameId);
+       game.events.on('state-change', updateClient)
+       game.addPlayer(player);
   });
 
   socket.on('pick-teams', () => game.pickTeams());
   socket.on('change-teams', ({ teams }) => game.changeTeams(teams));
   socket.on('start-entering-clues', () => game.startEnteringClues());
-  socket.on('submit-clues', ({ clues }) => game.addClues(clues, player));
+  socket.on('submit-clues', ({ clues, playerId }) => game.addClues(clues, playerId));
   socket.on('start-game', () => game.startGame());
   socket.on('start-turn', () => game.startActing());
   socket.on('clue-guessed', () => game.clueGuessed());
@@ -105,8 +135,10 @@ io.on('connection', function(socket){
   socket.on('next-round', () => game.nextRound());
   socket.on('new-game', () => game.newGame());
   socket.on('disconnect', () => {
-    if (game) {
-      game.removePlayer(player)
+    const player = state.players[socket.playerId];
+    if (game && player) {
+      game.removePlayer(player, socket.id);
+      delete state.players[player.id];
     }
     delete state.sockets[socket.id];
   });

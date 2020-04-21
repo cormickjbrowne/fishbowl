@@ -20,6 +20,7 @@ class Team {
   }
 
   nextPlayer(game) {
+    const playerIds = this.playerIds.filter(id => game.players[id].status === 'playing');
     const index = nextIndex(this.playerIds, this.currentPlayerIndex);
     const id = this.playerIds[index];
     this.currentPlayerIndex = index;

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Game } from '../models/game.interface';
 import { State } from '../models/state.interface';
@@ -11,7 +11,7 @@ import { GameService } from '../game.service';
   templateUrl: './new-game.component.html',
   styleUrls: ['./new-game.component.scss']
 })
-export class NewGameComponent implements OnInit {
+export class NewGameComponent implements OnInit, OnDestroy {
 
   public game: Game;
   public gameId: string;
@@ -23,13 +23,19 @@ export class NewGameComponent implements OnInit {
   public clues: string[] = [];
   public actingPlayer: Player;
   public timeLeft: number;
-  public numClues = 2;
+  public numClues = 4;
 
   constructor(private gameService: GameService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.gameId = params.id;
+
+      const currentPlayerId = localStorage.getItem(`${this.gameId}-currentPlayerId`);
+      if (currentPlayerId) {
+        this.gameService.setPlayerId(currentPlayerId);
+        this.joinGame();
+      }
     });
 
     this.gameService.state$.subscribe((state: State) => {
@@ -37,10 +43,14 @@ export class NewGameComponent implements OnInit {
       this.game = game;
       this.currentPlayerId = currentPlayerId;
       if (!game) return;
-      this.players = Object.values(game.players);
+      this.players = Object.values(game.players).filter(player => player.status === 'playing');
       this.actingPlayer = game.players[game.currentActorId];
       this.timeLeft = game.timeRemaining;
     });
+  }
+
+  ngOnDestroy() {
+    this.gameService.clearState();
   }
 
   get teams() {

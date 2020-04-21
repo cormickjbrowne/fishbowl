@@ -6,4 +6,5 @@ export interface Player {
   clueIds: string[];
   turnIds: string[];
   attemptIds: string[];
+  status: string;
 }
