@@ -162,5 +162,9 @@ export class NewGameComponent implements OnInit, OnDestroy {
   newGame() {
     this.gameService.newGame();
   }
+
+  get currentPlayerTeam() {
+    return this.game.teams[this.currentPlayer.teamId];
+  }
 }
 

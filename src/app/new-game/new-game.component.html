@@ -1,97 +1,105 @@
-<h1>Game Room</h1>
-<div *ngIf="state">Status: {{state.status}}</div>
-<div *ngIf="currentPlayerName">{{currentPlayer.name}} - {{currentPlayer.id}}</div>
+<div class="p-2">
+  <h1>Fishbowl</h1>
+  <div *ngIf="state">Status: {{state.status}}</div>
+  <div *ngIf="currentPlayerName">{{currentPlayer.name}} - {{currentPlayerTeam.name}}</div>
 
-<ng-container *ngIf="!currentPlayerId">
-  <input [(ngModel)]="playerName" placeholder="What's your name?"/>
-  <button (click)="joinGame()">Submit</button>
-</ng-container>
-
-<ng-container *ngIf="game">
-
-  <ng-container *ngIf="game.status === 'waiting-for-players-to-join'">
-    <div>Players:</div>
-    <ul>
-      <li *ngFor="let player of players">{{player.name}}</li>
-    </ul>
-    <button (click)="pickTeams()">Pick Teams</button>
+  <ng-container *ngIf="!currentPlayerId">
+    <div class="d-flex">
+      <input [(ngModel)]="playerName" placeholder="What's your name?"/>
+      <button (click)="joinGame()" class="btn btn-primary ml-2">Submit</button>
+    </div>
   </ng-container>
 
-  <ng-container *ngIf="game.status === 'picking-teams'">
-    <div *ngFor="let team of teams">
-      <b>{{team.name}}</b>
+  <ng-container *ngIf="game">
+
+    <ng-container *ngIf="game.status === 'waiting-for-players-to-join'">
+      <div>Players:</div>
       <ul>
-        <li *ngFor="let playerId of team.playerIds">{{game.players[playerId].name}}</li>
+        <li *ngFor="let player of players">{{player.name}}</li>
       </ul>
-    </div>
-    <button (click)="startWritingClues()">Start Writing Clues</button>
-  </ng-container>
+      <button (click)="pickTeams()" class="btn btn-primary">Pick Teams</button>
+    </ng-container>
 
-  <ng-container *ngIf="game.status === 'entering-clues'">
-    <div *ngIf="currentPlayer.clueIds.length === 0">
-      <input [(ngModel)]="clue"/>
-      <button (click)="saveClue()" [disabled]="clues.length === numClues">Enter</button>
-      <button (click)="submitClues()" [disabled]="clues.length < numClues" >Submit Clues</button>
-    </div>
-    <div *ngIf="currentPlayer.clueIds.length === numClues">
-      <b>Waiting Players</b>
+    <ng-container *ngIf="game.status === 'picking-teams'">
+      <div *ngFor="let team of teams">
+        <b>{{team.name}}</b>
+        <ul>
+          <li *ngFor="let playerId of team.playerIds">{{game.players[playerId].name}}</li>
+        </ul>
+      </div>
+      <button (click)="startWritingClues()" class="btn btn-primary">Start Writing Clues</button>
+    </ng-container>
+
+    <ng-container *ngIf="game.status === 'entering-clues'">
+      <div *ngIf="currentPlayer.clueIds.length === 0">
+        <div class="d-flex flex-column">
+          <input [(ngModel)]="clue" class="m-2"/>
+          <button (click)="saveClue()" [disabled]="clues.length === numClues" class="btn btn-secondary m-1">Enter</button>
+          <button (click)="submitClues()" [disabled]="clues.length < numClues" class="btn btn-primary m-1">Submit Clues</button>
+        </div>
+      </div>
+      <div *ngIf="currentPlayer.clueIds.length === numClues">
+        <b>Waiting Players</b>
+        <ul>
+          <ng-container *ngFor="let player of players">
+            <li *ngIf="!player.clueIds.length">{{player.name}}</li>
+          </ng-container>
+        </ul>
+      </div>
+      <b>Players Ready</b>
       <ul>
         <ng-container *ngFor="let player of players">
-          <li *ngIf="!player.clueIds.length">{{player.name}}</li>
+          <li *ngIf="player.clueIds.length">{{player.name}}</li>
         </ng-container>
       </ul>
-    </div>
-    <b>Players Ready</b>
-    <ul>
-      <ng-container *ngFor="let player of players">
-        <li *ngIf="player.clueIds.length">{{player.name}}</li>
+    </ng-container>
+
+    <ng-container *ngIf="game.status === 'ready-to-play'">
+      <button (click)="startGame()" class="btn btn-primary">Start Game</button>
+    </ng-container>
+
+    <ng-container *ngIf="game.status === 'ready-to-act'">
+      <div>Round {{game.currentRoundIndex + 1}} - {{currentRound.type}}</div>
+      <ng-container *ngIf="isActor">
+        <div>It's your turn!</div>
+        <button (click)="startTurn()" class="btn btn-primary">Start Turn</button>
       </ng-container>
-    </ul>
-  </ng-container>
-
-  <ng-container *ngIf="game.status === 'ready-to-play'">
-    <button (click)="startGame()">Start Game</button>
-  </ng-container>
-
-  <ng-container *ngIf="game.status === 'ready-to-act'">
-    <div>Round {{game.currentRoundIndex + 1}} - {{currentRound.type}}</div>
-    <ng-container *ngIf="isActor">
-      <div>It's your turn!</div>
-      <button (click)="startTurn()">Start Turn</button>
+      <ng-container *ngIf="!isActor">
+        <div>It's {{getActor().name}}'s turn. Waiting for them to start...</div>
+      </ng-container>
     </ng-container>
-    <ng-container *ngIf="!isActor">
-      <div>It's {{getActor().name}}'s turn. Waiting for them to start...</div>
+
+    <ng-container *ngIf="game.status === 'acting'">
+      <div>Round {{game.currentRoundIndex + 1}} - {{currentRound.type}}</div>
+      <ng-container *ngIf="isActor">
+        <div>Clue: "{{getCurrentClue().value}}"</div>
+        <div class="d-flex flex-column">
+          <button (click)="guessedClue()" class="btn btn-primary m-1">Got It!</button>
+          <button (click)="skipClue()" class="btn btn-secondary m-1">Skip</button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isActor"></ng-container>
+      <div>Time Remaining: {{game.timeRemaining}}</div>
+      <div>Clues Remaining: {{numCluesRemaining}}</div>
+      <div>Clues guessed this turn: {{numCluesGuessedThisTurn}}</div>
     </ng-container>
-  </ng-container>
 
-  <ng-container *ngIf="game.status === 'acting'">
-    <div>Round {{game.currentRoundIndex + 1}} - {{currentRound.type}}</div>
-    <ng-container *ngIf="isActor">
-      <div>Clue: "{{getCurrentClue().value}}"</div>
-      <button (click)="guessedClue()">Got It!</button>
-      <button (click)="skipClue()">Skip</button>
+    <ng-container *ngIf="game.status === 'round-over'">
+      <b>Score</b>
+      <ul>
+        <li *ngFor="let team of teams">{{team.name}} has {{getPointsForTeam(team.id)}} points.</li>
+      </ul>
+      <button (click)="startNextRound()" class="btn btn-primary">Start Next Round</button>
     </ng-container>
-    <ng-container *ngIf="!isActor"></ng-container>
-    <div>Time Remaining: {{game.timeRemaining}}</div>
-    <div>Clues Remaining: {{numCluesRemaining}}</div>
-    <div>Clues guessed this turn: {{numCluesGuessedThisTurn}}</div>
-  </ng-container>
 
-  <ng-container *ngIf="game.status === 'round-over'">
-    <b>Score</b>
-    <ul>
-      <li *ngFor="let team of teams">{{team.name}} has {{getPointsForTeam(team.id)}} points.</li>
-    </ul>
-    <button (click)="startNextRound()">Start Next Round</button>
-  </ng-container>
+    <ng-container *ngIf="game.status === 'game-over'">
+      <div>Game Over</div>
+      <b>Score</b>
+      <ul>
+        <li *ngFor="let team of teams">{{team.name}} has {{getPointsForTeam(team.id)}} points.</li>
+      </ul>
+      <button (click)="newGame()" class="btn btn-primary">New Game</button>
+    </ng-container>
 
-  <ng-container *ngIf="game.status === 'game-over'">
-    <div>Game Over</div>
-    <b>Score</b>
-    <ul>
-      <li *ngFor="let team of teams">{{team.name}} has {{getPointsForTeam(team.id)}} points.</li>
-    </ul>
-    <button (click)="newGame()">New Game</button>
   </ng-container>
-
-</ng-container>
+</div>
