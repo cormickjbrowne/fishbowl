@@ -279,6 +279,7 @@ class Game {
   }
 
   clueGuessed() {
+    if (this.game.status !== 'acting') { return; }
     console.log('clue guessed');
     const attempt = this.getCurrentAttempt();
     attempt.guessed();
@@ -287,6 +288,7 @@ class Game {
   }
 
   clueSkipped() {
+    if (this.game.status !== 'acting') { return; }
     console.log('clue skipped');
     const attempt = this.getCurrentAttempt();
     attempt.skipped();

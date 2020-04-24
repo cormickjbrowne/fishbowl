@@ -85,6 +85,34 @@ app.post('/game/boot-player', (req, res) => {
   res.send({ message: 'ok' });
 });
 
+app.post('/game/stop-timer', (req, res) => {
+  const { gameId } = req.body;
+  const game = state.games[gameId];
+
+  if (!game) {
+    res.status(400);
+    return res.send({ message: `Could not find game with id: "${gameId}"` });
+  }
+
+  game.stopTimer();
+  res.status(200);
+  res.send(game);
+});
+
+app.post('/game/start-timer', (req, res) => {
+  const { gameId } = req.body;
+  const game = state.games[gameId];
+
+  if (!game) {
+    res.status(400);
+    return res.send({ message: `Could not find game with id: "${gameId}"` });
+  }
+
+  game.startTimer();
+  res.status(200);
+  res.send(game);
+});
+
 io.on('connection', function(socket){
   state.sockets[socket.id] = socket;
   let game;
@@ -105,7 +133,7 @@ io.on('connection', function(socket){
         console.log('Found player.');
         const oldSocket = state.sockets[player.socketId];
         if (oldSocket) {
-          oldSocket.disconnect();
+          oldSocket.emit('new-socket');
           delete state.sockets[oldSocket.id];
         }
        } else if (playerName) {

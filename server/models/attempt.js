@@ -7,7 +7,7 @@ class Attempt {
     this.teamId = teamId;
     this.roundId = roundId;
     this.turnId = turnId;
-    this.clueId = roundId;
+    this.clueId = clueId;
     this.status = 'acting';
   }
 

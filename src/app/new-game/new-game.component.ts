@@ -24,10 +24,15 @@ export class NewGameComponent implements OnInit, OnDestroy {
   public actingPlayer: Player;
   public timeLeft: number;
   public numClues = 4;
+  public debug = false;
 
   constructor(private gameService: GameService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.route.queryParams.subscribe((queryParams) => {
+      this.debug = queryParams.debug === 'true';
+    });
+
     this.route.params.subscribe((params) => {
       this.gameId = params.id;
 
@@ -128,10 +133,6 @@ export class NewGameComponent implements OnInit, OnDestroy {
     this.gameService.startNextRound();
   }
 
-  startTimer() {
-    this.gameService.startActing();
-  }
-
   guessedClue() {
     this.gameService.guessedClue();
   }
@@ -165,6 +166,40 @@ export class NewGameComponent implements OnInit, OnDestroy {
 
   get currentPlayerTeam() {
     return this.game.teams[this.currentPlayer.teamId];
+  }
+
+  get gameState() {
+    return JSON.stringify(this.game.roundIds.map(roundId => {
+      const round = this.game.rounds[roundId];
+      return {
+        type: round.type,
+        turns: round.turnIds.map(turnId => {
+          const turn = this.game.turns[turnId];
+          return {
+            player: this.game.players[turn.playerId].name,
+            attempts: turn.attemptIds.map(attemptId => {
+              const attempt = this.game.attempts[attemptId];
+              const clue = this.game.clues[attempt.clueId];
+              return {
+                status: attempt.status,
+                clue: {
+                  value: clue.value,
+                  createBy: this.game.players[clue.createdByPlayerId].name
+                }
+              };
+            })
+          };
+        })
+      };
+    }), null, 2);
+  }
+
+  startTimer() {
+    this.gameService.startTimer();
+  }
+
+  stopTimer() {
+    this.gameService.stopTimer();
   }
 }
 

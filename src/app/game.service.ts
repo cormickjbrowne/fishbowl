@@ -94,16 +94,19 @@ export class GameService {
     });
 
     socket.on('game-not-found', () => {
+      console.log('Game not found.')
+      this.clearState();
       this.router.navigateByUrl('/');
     });
 
     socket.on('player-not-found', () => {
       console.log('Player not found');
-      this.setState({ currentPlayerId: undefined });
+      this.clearState();
       localStorage.removeItem(`${gameId}-currentPlayerId`);
     });
 
-    socket.on('disconnect', () => {
+    socket.on('new-socket', () => {
+      this.clearState();
       this.router.navigateByUrl('/');
     });
   }
@@ -150,5 +153,13 @@ export class GameService {
 
   clearState() {
     this.setState(initialState);
+  }
+
+  startTimer() {
+    this.http.post('/server/game/start-timer', { gameId: this.state.game.id }).subscribe();
+  }
+
+  stopTimer() {
+    this.http.post('/server/game/stop-timer', { gameId: this.state.game.id }).subscribe();
   }
 }
