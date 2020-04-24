@@ -27,6 +27,7 @@
           <li *ngFor="let playerId of team.playerIds">{{game.players[playerId].name}}</li>
         </ul>
       </div>
+      <button (click)="switchTeams()" class="btn btn-secondary">Switch Teams</button>
       <button (click)="startWritingClues()" class="btn btn-primary">Start Writing Clues</button>
     </ng-container>
 

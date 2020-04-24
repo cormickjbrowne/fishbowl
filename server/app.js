@@ -153,7 +153,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('pick-teams', () => game.pickTeams());
-  socket.on('change-teams', ({ teams }) => game.changeTeams(teams));
+  socket.on('switch-teams', ({ playerId }) => game.switchTeams(playerId));
   socket.on('start-entering-clues', () => game.startEnteringClues());
   socket.on('submit-clues', ({ clues, playerId }) => game.addClues(clues, playerId));
   socket.on('start-game', () => game.startGame());

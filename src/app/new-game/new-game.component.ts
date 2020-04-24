@@ -201,5 +201,9 @@ export class NewGameComponent implements OnInit, OnDestroy {
   stopTimer() {
     this.gameService.stopTimer();
   }
+
+  switchTeams() {
+    this.gameService.switchTeams();
+  }
 }
 

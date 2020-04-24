@@ -18,7 +18,7 @@ const initialState: State = {
 };
 
 const mergeStrategy = (objValue, srcValue, key, object, source, stack) => {
-  if (key === 'players' || key === 'clues' || key === 'attempts') {
+  if (key === 'players' || key === 'clues' || key === 'attempts' || key === 'teams') {
     return srcValue;
   }
 }
@@ -161,5 +161,9 @@ export class GameService {
 
   stopTimer() {
     this.http.post('/server/game/stop-timer', { gameId: this.state.game.id }).subscribe();
+  }
+
+  switchTeams() {
+    this.socket.emit('switch-teams', { playerId: this.state.currentPlayerId });
   }
 }

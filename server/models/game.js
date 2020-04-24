@@ -99,10 +99,16 @@ class Game {
     this.emitStateChange();
   }
 
-  changeTeams(teams) {
-    Object.values(teams).forEach(team => {
-      this.teams[team.id].playerIds = team.playerIds;
-    });
+  switchTeams(playerId) {
+    const player = this.get('player', playerId);
+    const currentTeam = this.get('team', player.teamId);
+    const currentTeamIdIndex = this.teamIds.findIndex(teamId => teamId === currentTeam.id);
+    const nextTeamIdIndex = nextIndex(this.teamIds, currentTeamIdIndex);
+    const nextTeamId = this.teamIds[nextTeamIdIndex];
+    const nextTeam = this.get('team', nextTeamId);
+    currentTeam.removePlayer(playerId);
+    nextTeam.addPlayer(player);
+    player.teamId = nextTeam.id;
     this.emitStateChange();
   }
 
