@@ -1,44 +1,14 @@
-How should I model game state and changes?
-When a player takes an action whats the best way to udate the other players?
-For example should I send the full state down to the client whenever any action occurs? Or should I just send the message with the minimum info each client needs to update its own state?
+## Checkout ##
+To checkout the repo run: `git clone git@github.com:cormickjbrowne/fishbowl.git`
 
+## Installation ##
+Change directory and install:
+`cd fishbowl` and `npm install`. If you don't have `npm` installed, you should download and install `node`. Any of the LTS (long term support) versions over 10.x.x should be fine. https://nodejs.org/en/download/
 
+## Running the App ##
+Once the project has been checked out and the dependencies have been installed you can start the app. In order to do this you need to start two process, the client and the server.
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/7.13.1/firebase-app.js"></script>
+To start the server run `npm run start:server`. This will start the RESTful nodejs/express application server that accepts HTTP and websocket requests. The entry point for the server code is found in `server/app.js`.
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/7.13.1/firebase-analytics.js"></script>
+To start the client run `npm start`. This will start the static web server. This will server your static assets (html, css, javascript) using Webpack dev server. Once the process is done starting up you should be able to view the app at `http://localhost:4200`. Most of the logic for the web app lives in `src/app/new-game/new-game.component.ts` and `src/app/game.service.ts`.
 
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
-
-
-# Fishbowl
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
