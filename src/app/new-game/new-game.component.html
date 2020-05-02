@@ -1,5 +1,8 @@
 <div class="p-2">
-  <h1>Fishbowl {{ debug ? '- DEBUG' : ''}}</h1>
+  <div class="d-flex">
+    <icon-home (click)="goHome()" class="cursor-pointer"></icon-home>
+    <h1>Fishbowl {{ debug ? '- DEBUG' : ''}}</h1>
+  </div>
   <div *ngIf="state">Status: {{state.status}}</div>
   <div *ngIf="currentPlayerName">{{currentPlayer.name}} - {{currentPlayerTeam.name}}</div>
 

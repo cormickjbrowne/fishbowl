@@ -205,5 +205,9 @@ export class NewGameComponent implements OnInit, OnDestroy {
   switchTeams() {
     this.gameService.switchTeams();
   }
+
+  goHome() {
+    this.gameService.goHome();
+  }
 }
 

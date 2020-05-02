@@ -166,4 +166,8 @@ export class GameService {
   switchTeams() {
     this.socket.emit('switch-teams', { playerId: this.state.currentPlayerId });
   }
+
+  goHome() {
+    this.router.navigateByUrl('/');
+  }
 }

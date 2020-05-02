@@ -340,6 +340,39 @@ class Game {
       this.get('rounds').forEach(round => round.reset());
       this.emitStateChange();
   }
+
+  denormalize() {
+    return {
+      name: this.id,
+      players: Object.values(this.players).map(player => ({
+        name: player.name,
+        team: this.teams[player.teamId].name
+      })),
+      rounds: this.roundIds.map(roundId => {
+        const round = this.rounds[roundId];
+        return {
+          type: round.type,
+          turns: round.turnIds.map(turnId => {
+            const turn = this.turns[turnId];
+            return {
+              player: this.players[turn.playerId].name,
+              attempts: turn.attemptIds.map(attemptId => {
+                const attempt = this.attempts[attemptId];
+                const clue = this.clues[attempt.clueId];
+                return {
+                  status: attempt.status,
+                  clue: {
+                    value: clue.value,
+                    createBy: this.players[clue.createdByPlayerId].name
+                  }
+                };
+              })
+            };
+          })
+        };
+      })
+    };
+  }
 }
 
 module.exports = {

@@ -37,6 +37,11 @@ app.get('/game/:id', (req, res) => {
   res.json(game);
 });
 
+app.get('/games', (req, res) => {
+  res.status(200);
+  res.json(Object.values(state.games).map(game => game.denormalize()));
+});
+
 app.put('/game/:id', (req, res) => {
   const { id } = req.params;
   const { status, clues, playerName } = req.body;
@@ -136,6 +141,7 @@ io.on('connection', function(socket){
           oldSocket.emit('new-socket');
           delete state.sockets[oldSocket.id];
         }
+        socket.emit('reconnect');
        } else if (playerName) {
         console.log('Creating new player...');
         player = new Player(playerName);

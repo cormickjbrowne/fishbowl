@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.component';
 import { NewGameComponent } from './new-game/new-game.component';
 import { JoinGameComponent } from './join-game/join-game.component';
+import { IconsModule } from './icons/icons.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { JoinGameComponent } from './join-game/join-game.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    IconsModule,
     FormsModule
   ],
   providers: [],
