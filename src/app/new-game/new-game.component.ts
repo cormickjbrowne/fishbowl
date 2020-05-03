@@ -6,6 +6,9 @@ import { State } from '../models/state.interface';
 import { Player } from '../models/player.interface';
 import { GameService } from '../game.service';
 
+const numClues = 4;
+const getEmptyClues = () => new Array(numClues).fill(1).map(() => ({ value: null }));
+
 @Component({
   selector: 'app-new-game',
   templateUrl: './new-game.component.html',
@@ -14,33 +17,24 @@ import { GameService } from '../game.service';
 export class NewGameComponent implements OnInit, OnDestroy {
 
   public game: Game;
-  public gameId: string;
   public currentPlayerId: string;
   public socket: any;
   public playerName: string;
   public players: Player[] = [];
   public clue: string;
-  public clues: string[] = [];
+  public clues: { value: string }[] = getEmptyClues();
   public actingPlayer: Player;
   public timeLeft: number;
-  public numClues = 4;
+  public numClues = numClues;
   public debug = false;
 
-  constructor(private gameService: GameService, private route: ActivatedRoute) {}
+  constructor(private gameService: GameService, private route: ActivatedRoute) {
+    this.onKeyUp = this.onKeyUp.bind(this);
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.debug = queryParams.debug === 'true';
-    });
-
-    this.route.params.subscribe((params) => {
-      this.gameId = params.id;
-
-      const currentPlayerId = localStorage.getItem(`${this.gameId}-currentPlayerId`);
-      if (currentPlayerId) {
-        this.gameService.setPlayerId(currentPlayerId);
-        this.joinGame();
-      }
     });
 
     this.gameService.state$.subscribe((state: State) => {
@@ -99,18 +93,15 @@ export class NewGameComponent implements OnInit, OnDestroy {
   }
 
   joinGame() {
-    this.gameService.joinGame(this.playerName, this.gameId);
+    this.gameService.joinGame(this.playerName);
     this.playerName = '';
   }
 
-  saveClue() {
-    this.clues.push(this.clue);
-    this.clue = '';
-  }
-
   submitClues() {
-    this.gameService.submitClues(this.clues);
-    this.clues = [];
+    if (this.clues.every(clue => !!clue.value)) {
+      this.gameService.submitClues(this.clues.map(clue => clue.value));
+      this.clues = getEmptyClues();
+    }
   }
 
   pickTeams() {
@@ -208,6 +199,12 @@ export class NewGameComponent implements OnInit, OnDestroy {
 
   goHome() {
     this.gameService.goHome();
+  }
+
+  onKeyUp(targetKey: string, event: KeyboardEvent, method: Function) {
+    if (event.key === targetKey) {
+      method.call(this);
+    }
   }
 }
 

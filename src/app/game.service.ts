@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
 import { Game } from './models/game.interface';
 import { Player } from './models/player.interface';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 import { State } from './models/state.interface';
 import { Status } from './models/status.interface';
 import { mergeWith } from 'lodash';
 import * as io from 'socket.io-client';
+import { findRoute } from './utils';
 
 const waitTime = 5;
 
@@ -23,6 +24,8 @@ const mergeStrategy = (objValue, srcValue, key, object, source, stack) => {
   }
 }
 
+const localStorageKey = (gameId: string) => `${gameId}-currentPlayerId`;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,12 +38,78 @@ export class GameService {
   public socket: any;
 
   constructor(private http: HttpClient, private router: Router) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const gameRoute = findRoute(
+          router.routerState,
+          (route: ActivatedRoute) => {
+            let match = false;
+            route.paramMap
+              .pipe(take(1))
+              .subscribe((paramMap: ParamMap) => {
+                if (paramMap.keys.includes('gameId')) {
+                  match = true;
+                }
+              })
+            return match;
+          }
+        );
+
+        if (!gameRoute) {
+          console.log('Could not find gameId in tree of routes.');
+          if (this.socket) {
+            console.log('this.socket.close();');
+            this.socket.close();
+          }
+          const {currentPlayerId, game} = this.state;
+          if (currentPlayerId && game) {
+            console.log('Storing playerId for game,', game.id);
+            this.addPlayerIdToStorage(currentPlayerId);
+          }
+          this.setState(initialState);
+          return;
+        }
+
+        gameRoute.paramMap.pipe(take(1)).subscribe((paramMap: ParamMap) => {
+          const gameId = paramMap.get('gameId');
+          console.log('Found route params with :gameId,', gameId);
+          this.http.get(`/server/game/${gameId}`).subscribe(
+            (game: Game) => {
+              console.log(`Got game from /server/game/${gameId}`);
+              this.setState({ game });
+              const currentPlayerId = this.getPlayerIdFromStorage(game.id);
+              if (currentPlayerId) {
+                console.log('Found playerId in localStorage', currentPlayerId);
+                const currentPlayer = game.players[currentPlayerId];
+                if (currentPlayer) {
+                  console.log('Found player in game with id', currentPlayerId);
+                  this.setPlayerId(currentPlayerId);
+                  this.joinGame();
+                } else {
+                  console.log('Could not find player in game with id', currentPlayerId);
+                  this.resetPlayerId();
+                }
+              } else {
+                console.log('Could not find playerId in localStorage', currentPlayerId);
+                this.resetPlayerId();
+              }
+            },
+            (error) => {
+              console.log(`Could not find game at /server/game/${gameId}`);
+              this.removePlayerIdFromStorage(gameId);
+              this.setState(initialState);
+              this.router.navigateByUrl('/');
+            }
+          );
+        });
+      }
+    });
     console.log('Game Service created.');
     this.logState();
   }
 
   logState() {
-    console.log(JSON.stringify(this.state, null, 4));
+//     console.log(JSON.stringify(this.state, null, 4));
   }
 
   createGame(): void {
@@ -58,57 +127,82 @@ export class GameService {
   }
 
   setPlayerId(currentPlayerId: string) {
+    currentPlayerId
+      ? this.addPlayerIdToStorage(currentPlayerId)
+      : this.removePlayerIdFromStorage();
+
     this.setState({ currentPlayerId });
   }
 
-  getGame(id: string): void {
-    this.http.get<Game>(`/server/game/${id}`)
-    .pipe(catchError((err) => {
-      this.router.navigateByUrl('/');
-      return throwError(err.error);
-    }))
-    .subscribe((game: Game) => {
-      this.setState({ game });
-    });
+  resetPlayerId() {
+    this.setPlayerId(initialState.currentPlayerId);
   }
 
-  joinGame(playerName: string, gameId: string): void {
+  joinGame(playerName?: string): void {
+    console.log('socket.connect()');
     const socket = io();
     this.socket = socket;
 
     socket.on('connect', () => {
-      socket.emit('join', { gameId, playerName, playerId: this.state.currentPlayerId });
+      console.log('socket.on("connect")');
+      console.log('socket.emit("join")');
+      socket.emit('join', {
+        gameId: this.state.game.id,
+        playerName,
+        playerId: this.state.currentPlayerId
+      });
     });
 
     socket.on('reconnect', () => {
-      socket.emit('join', { gameId, playerId: this.state.currentPlayerId });
+      console.log('socket.on("reconnect")');
+      console.log('socket.emit("join")');
+      socket.emit('join', { gameId: this.state.game.id, playerId: this.state.currentPlayerId });
     });
 
     socket.on('state-change', (game) => {
+      console.log('socket.on("state-change")');
+      console.log('this.setState({ game })');
       this.setState({ game });
     });
 
     socket.on('player-id', (currentPlayerId) => {
-      this.setState({ currentPlayerId });
-      localStorage.setItem(`${gameId}-currentPlayerId`, this.state.currentPlayerId);
+      console.log('socket.on("player-id")');
+      console.log('this.setPlayerId(currentPlayerId);');
+      console.log('this.addPlayerIdToStorage(currentPlayerId);');
+      this.setPlayerId(currentPlayerId);
+      this.addPlayerIdToStorage(currentPlayerId);
     });
 
     socket.on('game-not-found', () => {
-      console.log('Game not found.')
+      console.log('socket.on("game-not-found")');
       this.clearState();
       this.router.navigateByUrl('/');
     });
 
     socket.on('player-not-found', () => {
-      console.log('Player not found');
+      console.log('socket.on("player-not-found")');
       this.clearState();
-      localStorage.removeItem(`${gameId}-currentPlayerId`);
+      this.removePlayerIdFromStorage();
     });
 
     socket.on('new-socket', () => {
+      console.log('socket.on("new-socket")');
       this.clearState();
       this.router.navigateByUrl('/');
     });
+  }
+
+  addPlayerIdToStorage(playerId: string) {
+    localStorage.setItem(localStorageKey(this.state.game.id), playerId);
+  }
+
+  removePlayerIdFromStorage(gameId?: string) {
+    console.log(`localStorage.removeItem(${gameId || this.state.game.id})`);
+    localStorage.removeItem(localStorageKey(gameId || this.state.game.id));
+  }
+
+  getPlayerIdFromStorage(gameId: string) {
+    return localStorage.getItem(localStorageKey(gameId));
   }
 
   pickTeams() {
@@ -152,6 +246,10 @@ export class GameService {
   }
 
   clearState() {
+    console.log('game.service.clearState()');
+    if (this.socket) {
+      this.socket.close();
+    }
     this.setState(initialState);
   }
 

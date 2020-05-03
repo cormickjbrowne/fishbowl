@@ -116,10 +116,6 @@ class Game {
     console.log('player left:', player.name);
     const team = this.teams[player.teamId];
     player.leaveGame(socketId);
-    if (this.status === 'waiting-for-players-to-join') {
-      team.removePlayer(player.id);
-      this.deletePlayer(player);
-    }
     this.emitStateChange();
   }
 

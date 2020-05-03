@@ -6,14 +6,14 @@
   <div *ngIf="state">Status: {{state.status}}</div>
   <div *ngIf="currentPlayerName">{{currentPlayer.name}} - {{currentPlayerTeam.name}}</div>
 
-  <ng-container *ngIf="!currentPlayerId">
+  <ng-container *ngIf="!currentPlayerName">
     <div class="d-flex">
-      <input [(ngModel)]="playerName" placeholder="What's your name?"/>
+      <input [(ngModel)]="playerName" placeholder="What's your name?" autofocus (keyup)="onKeyUp('Enter', $event, joinGame)"/>
       <button (click)="joinGame()" class="btn btn-primary ml-2">Submit</button>
     </div>
   </ng-container>
 
-  <ng-container *ngIf="game">
+  <ng-container *ngIf="currentPlayerName">
 
     <ng-container *ngIf="game.status === 'waiting-for-players-to-join'">
       <div>Players:</div>
@@ -27,7 +27,9 @@
       <div *ngFor="let team of teams">
         <b>{{team.name}}</b>
         <ul>
-          <li *ngFor="let playerId of team.playerIds">{{game.players[playerId].name}}</li>
+          <ng-container *ngFor="let playerId of team.playerIds">
+            <li *ngIf="game.players[playerId].status === 'playing'">{{game.players[playerId].name}}</li>
+          </ng-container>
         </ul>
       </div>
       <button (click)="switchTeams()" class="btn btn-secondary">Switch Teams</button>
@@ -37,9 +39,8 @@
     <ng-container *ngIf="game.status === 'entering-clues'">
       <div *ngIf="currentPlayer.clueIds.length === 0">
         <div class="d-flex flex-column">
-          <input [(ngModel)]="clue" class="m-2"/>
-          <button (click)="saveClue()" [disabled]="clues.length === numClues" class="btn btn-secondary m-1">Enter</button>
-          <button (click)="submitClues()" [disabled]="clues.length < numClues" class="btn btn-primary m-1">Submit Clues</button>
+          <input *ngFor="let clue of clues" [(ngModel)]="clue.value" class="m-2"/>
+          <button (click)="submitClues()" class="btn btn-primary m-1">Submit</button>
         </div>
       </div>
       <div *ngIf="currentPlayer.clueIds.length === numClues">

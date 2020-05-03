@@ -31,9 +31,10 @@ app.get('/game/:id', (req, res) => {
 
   if (!game) {
     res.status(404);
-    res.send(`Could not find game with id: "${id}".`);
+    return res.json({ message: `Could not find game with id: "${id}".` });
   }
 
+  res.status(200);
   res.json(game);
 });
 
@@ -119,6 +120,7 @@ app.post('/game/start-timer', (req, res) => {
 });
 
 io.on('connection', function(socket){
+  console.log('socket.on("connect")', socket.id);
   state.sockets[socket.id] = socket;
   let game;
 
@@ -130,18 +132,20 @@ io.on('connection', function(socket){
   console.log('a user connected');
 
   socket.on('join', ({ gameId, playerName, playerId }) => {
-      console.log('Joining game...');
+       console.log('socket.on("join")', socket.id);
        game = state.games[gameId];
        if (!game) { console.log('Game not found.'); return socket.emit('game-not-found'); }
        let player = game.players[playerId];
        if (player) {
         console.log('Found player.');
         const oldSocket = state.sockets[player.socketId];
-        if (oldSocket) {
+        if (oldSocket && oldSocket.id !== socket.id) {
+          console.log('oldSocket', oldSocket.id);
+          console.log('newSocket', socket.id);
+          console.log('oldSocket.emit("new-socket")');
           oldSocket.emit('new-socket');
           delete state.sockets[oldSocket.id];
         }
-        socket.emit('reconnect');
        } else if (playerName) {
         console.log('Creating new player...');
         player = new Player(playerName);
@@ -151,9 +155,11 @@ io.on('connection', function(socket){
        }
        socket.playerId = player.id;
        player.socketId = socket.id;
+       console.log('socket.emit("player-id")');
        socket.emit('player-id', player.id);
        state.players[player.id] = player;
        socket.join(gameId);
+       console.log('Subscribe socket to "state-change"');
        game.events.on('state-change', updateClient)
        game.addPlayer(player);
   });
@@ -169,9 +175,12 @@ io.on('connection', function(socket){
   socket.on('next-round', () => game.nextRound());
   socket.on('new-game', () => game.newGame());
   socket.on('disconnect', () => {
+    console.log('socket.on("disconnect")');
     const player = state.players[socket.playerId];
     if (game && player) {
+      console.log('player disconnected', player.name);
       game.removePlayer(player, socket.id);
+      game.events.removeListener('state-change', updateClient);
       delete state.players[player.id];
     }
     delete state.sockets[socket.id];

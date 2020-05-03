@@ -18,4 +18,10 @@ export class JoinGameComponent implements OnInit {
   public joinGame() {
       this.router.navigateByUrl(`/game/${this.gameId}`);
   }
+
+  onKeyUp(targetKey: string, event: KeyboardEvent, method: Function) {
+    if (event.key === targetKey) {
+      method.call(this);
+    }
+  }
 }
