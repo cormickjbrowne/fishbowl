@@ -1,0 +1,1056 @@
+acting started
+attempting next clue
+start timer.
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("connect") 4jYrjILw3Ess1uo8AAAK
+a user connected
+socket.on("join") 4jYrjILw3Ess1uo8AAAK
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") 4jYrjILw3Ess1uo8AAAK
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+stop acting
+stop timer.
+Turn ended.
+socket.on("connect") W3dube3-fe6Sa8lcAAAL
+a user connected
+socket.on("join") W3dube3-fe6Sa8lcAAAL
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") W3dube3-fe6Sa8lcAAAL
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+(node:19111) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 state-change listeners added. Use emitter.setMaxListeners() to increase limit
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("connect") OVWyDsGoU94F57MCAAAM
+a user connected
+socket.on("join") OVWyDsGoU94F57MCAAAM
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+clue guessed
+attempting next clue
+socket.on("connect") kRcdQdNOtXlQSMX0AAAN
+a user connected
+socket.on("join") kRcdQdNOtXlQSMX0AAAN
+Found player.
+oldSocket OVWyDsGoU94F57MCAAAM
+newSocket kRcdQdNOtXlQSMX0AAAN
+oldSocket.emit("new-socket")
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") kRcdQdNOtXlQSMX0AAAN
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") KLPyffRZGrfHhnlFAAAO
+a user connected
+socket.on("join") KLPyffRZGrfHhnlFAAAO
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+socket.on("disconnect")
+player disconnected Clark clark clark
+player left: Clark clark clark
+socket.on("connect") vPKnGWirkWytQ_y0AAAP
+a user connected
+socket.on("join") vPKnGWirkWytQ_y0AAAP
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("connect") cv1FwqYO5bPQtQriAAAQ
+a user connected
+socket.on("join") cv1FwqYO5bPQtQriAAAQ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") cv1FwqYO5bPQtQriAAAQ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+socket.on("connect") UlH-ydo7DsdWnmMEAAAR
+a user connected
+socket.on("join") UlH-ydo7DsdWnmMEAAAR
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") 1UsNgk6OCqgq6PwrAAAS
+a user connected
+socket.on("join") 1UsNgk6OCqgq6PwrAAAS
+Found player.
+oldSocket UlH-ydo7DsdWnmMEAAAR
+newSocket 1UsNgk6OCqgq6PwrAAAS
+oldSocket.emit("new-socket")
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+clue guessed
+attempting next clue
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") iZZ_-eXDe3G_k0QBAAAT
+a user connected
+socket.on("join") iZZ_-eXDe3G_k0QBAAAT
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+clue skipped
+attempting next clue
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("connect") 9CMjojS9LHFx89P6AAAU
+a user connected
+socket.on("join") 9CMjojS9LHFx89P6AAAU
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") 9CMjojS9LHFx89P6AAAU
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+socket.on("connect") Y9PsJAXzWmSln0RzAAAV
+a user connected
+socket.on("join") Y9PsJAXzWmSln0RzAAAV
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("connect") cuERBRSI6hkm9w8QAAAW
+a user connected
+socket.on("join") cuERBRSI6hkm9w8QAAAW
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") cuERBRSI6hkm9w8QAAAW
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+clue skipped
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") kVeJCCtgHBipwx10AAAX
+a user connected
+socket.on("join") kVeJCCtgHBipwx10AAAX
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+socket.on("connect") YREMxgILn6CGHdJMAAAY
+a user connected
+socket.on("join") YREMxgILn6CGHdJMAAAY
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") YREMxgILn6CGHdJMAAAY
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("connect") j1IwHa5KWO5SlNKQAAAZ
+a user connected
+socket.on("join") j1IwHa5KWO5SlNKQAAAZ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") j1IwHa5KWO5SlNKQAAAZ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") vTVp_yZgAOPSZ_FRAAAa
+a user connected
+socket.on("join") vTVp_yZgAOPSZ_FRAAAa
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") vTVp_yZgAOPSZ_FRAAAa
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("disconnect")
+player disconnected Teo
+player left: Teo
+socket.on("connect") vdiK3e-yi2446v7aAAAb
+a user connected
+socket.on("join") vdiK3e-yi2446v7aAAAb
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") yi3o9POv9O6AmwkoAAAc
+a user connected
+socket.on("join") yi3o9POv9O6AmwkoAAAc
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") yi3o9POv9O6AmwkoAAAc
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("connect") BC2ojgSUdkHYeHIGAAAd
+a user connected
+socket.on("join") BC2ojgSUdkHYeHIGAAAd
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") BC2ojgSUdkHYeHIGAAAd
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+socket.on("connect") 8yXwTbBTQ5tNGkKQAAAe
+a user connected
+socket.on("join") 8yXwTbBTQ5tNGkKQAAAe
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") jzsqSqMmaQQYZ1hXAAAf
+a user connected
+socket.on("join") jzsqSqMmaQQYZ1hXAAAf
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+clue skipped
+attempting next clue
+clue guessed
+attempting next clue
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+clue guessed
+attempting next clue
+stop timer.
+socket.on("disconnect")
+player disconnected Teo
+player left: Teo
+socket.on("disconnect")
+player disconnected Clark clark clark
+player left: Clark clark clark
+socket.on("connect") nGYdAUc4knfrDVvhAAAg
+a user connected
+socket.on("join") nGYdAUc4knfrDVvhAAAg
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") nGYdAUc4knfrDVvhAAAg
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") FvkkSXNOSjv6kcaMAAAh
+a user connected
+socket.on("join") FvkkSXNOSjv6kcaMAAAh
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") FvkkSXNOSjv6kcaMAAAh
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") jHryyCyI-G515B7EAAAi
+a user connected
+socket.on("join") jHryyCyI-G515B7EAAAi
+Found player.
+oldSocket FvkkSXNOSjv6kcaMAAAh
+newSocket jHryyCyI-G515B7EAAAi
+oldSocket.emit("new-socket")
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("connect") RsTVR3DFU30zjcvcAAAj
+a user connected
+socket.on("disconnect")
+socket.on("connect") ohOgIrt3GyJMmJUhAAAk
+a user connected
+socket.on("join") ohOgIrt3GyJMmJUhAAAk
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+socket.on("join") ohOgIrt3GyJMmJUhAAAk
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Leah
+player left: Leah
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") RE1ePuAg3aeZfhd-AAAl
+a user connected
+socket.on("join") RE1ePuAg3aeZfhd-AAAl
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") RE1ePuAg3aeZfhd-AAAl
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") O9yxZUmm97SD_l2UAAAm
+a user connected
+socket.on("join") O9yxZUmm97SD_l2UAAAm
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") O9yxZUmm97SD_l2UAAAm
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") hrbDQ9urzf8dM7cYAAAn
+a user connected
+socket.on("join") hrbDQ9urzf8dM7cYAAAn
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") hrbDQ9urzf8dM7cYAAAn
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+next round
+socket.on("connect") iZN7F-5YUi7YER7KAAAo
+a user connected
+socket.on("join") iZN7F-5YUi7YER7KAAAo
+Found player.
+oldSocket jHryyCyI-G515B7EAAAi
+newSocket iZN7F-5YUi7YER7KAAAo
+oldSocket.emit("new-socket")
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") 2JDfQMd5FTBORju1AAAp
+a user connected
+socket.on("join") 2JDfQMd5FTBORju1AAAp
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") 2JDfQMd5FTBORju1AAAp
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") fxKTGcZ-WwZ7d1zzAAAq
+a user connected
+socket.on("connect") c9bnE9LtB4DK9FfwAAAr
+a user connected
+socket.on("join") fxKTGcZ-WwZ7d1zzAAAq
+Found player.
+oldSocket iZN7F-5YUi7YER7KAAAo
+newSocket fxKTGcZ-WwZ7d1zzAAAq
+oldSocket.emit("new-socket")
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") c9bnE9LtB4DK9FfwAAAr
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") c9bnE9LtB4DK9FfwAAAr
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Clark clark clark
+player left: Clark clark clark
+socket.on("disconnect")
+socket.on("disconnect")
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("connect") 1VS3i7yiHznLpMf_AAAs
+a user connected
+socket.on("join") 1VS3i7yiHznLpMf_AAAs
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") 1VS3i7yiHznLpMf_AAAs
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") iTHEuLcus74Sy6gfAAAt
+a user connected
+socket.on("join") iTHEuLcus74Sy6gfAAAt
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("connect") 2AeW-3eC_ZcHqMvSAAAu
+a user connected
+socket.on("join") 2AeW-3eC_ZcHqMvSAAAu
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+socket.on("connect") fpFIa7iUe6Fq06mOAAAv
+a user connected
+socket.on("join") fpFIa7iUe6Fq06mOAAAv
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") fpFIa7iUe6Fq06mOAAAv
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") 5c_5MwwozqyLdOX-AAAw
+a user connected
+socket.on("join") 5c_5MwwozqyLdOX-AAAw
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") 5c_5MwwozqyLdOX-AAAw
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Teo
+player left: Teo
+socket.on("connect") V1oKmdwtVYDuq84IAAAx
+a user connected
+socket.on("join") V1oKmdwtVYDuq84IAAAx
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") V1oKmdwtVYDuq84IAAAx
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+socket.on("connect") Sje6fSkeOmLXmZCBAAAy
+a user connected
+socket.on("join") Sje6fSkeOmLXmZCBAAAy
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") Sje6fSkeOmLXmZCBAAAy
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") hVcZc2bn5LLbCXVmAAAz
+a user connected
+socket.on("join") hVcZc2bn5LLbCXVmAAAz
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") hVcZc2bn5LLbCXVmAAAz
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+acting started
+attempting next clue
+start timer.
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+clue skipped
+attempting next clue
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+clue skipped
+attempting next clue
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+clue guessed
+attempting next clue
+stop acting
+stop timer.
+Turn ended.
+socket.on("disconnect")
+player disconnected Leah
+player left: Leah
+socket.on("disconnect")
+player disconnected Teo
+player left: Teo
+socket.on("disconnect")
+player disconnected Clark clark clark
+player left: Clark clark clark
+socket.on("connect") J6or6vwENM6xkkgZAAA0
+a user connected
+socket.on("join") J6or6vwENM6xkkgZAAA0
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") J6or6vwENM6xkkgZAAA0
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("connect") qdaktK3kovQAaWM4AAA1
+a user connected
+socket.on("join") qdaktK3kovQAaWM4AAA1
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") qdaktK3kovQAaWM4AAA1
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") 7pxPau6YcVWlrWfeAAA2
+a user connected
+socket.on("join") 7pxPau6YcVWlrWfeAAA2
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") m8lY3upYYW_XTYOuAAA3
+a user connected
+socket.on("connect") MvSPiPFEe4lCbsgaAAA4
+a user connected
+socket.on("join") m8lY3upYYW_XTYOuAAA3
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") m8lY3upYYW_XTYOuAAA3
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("join") MvSPiPFEe4lCbsgaAAA4
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") MvSPiPFEe4lCbsgaAAA4
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") dGfOUjRQiqWgH9XiAAA5
+a user connected
+socket.on("join") dGfOUjRQiqWgH9XiAAA5
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") y5OxDokypX7jJHFJAAA6
+a user connected
+socket.on("join") y5OxDokypX7jJHFJAAA6
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") y5OxDokypX7jJHFJAAA6
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") 2YkzH2QJBAxpHwr6AAA7
+a user connected
+socket.on("join") 2YkzH2QJBAxpHwr6AAA7
+Found player.
+oldSocket 7pxPau6YcVWlrWfeAAA2
+newSocket 2YkzH2QJBAxpHwr6AAA7
+oldSocket.emit("new-socket")
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") 4eIBt_Au5qgw1WfRAAA8
+a user connected
+socket.on("join") 4eIBt_Au5qgw1WfRAAA8
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") 4eIBt_Au5qgw1WfRAAA8
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") -jY6apHQA2hdKyPYAAA9
+a user connected
+socket.on("connect") _aUuB5CoHr4tU9kDAAA-
+a user connected
+socket.on("join") _aUuB5CoHr4tU9kDAAA-
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+socket.on("connect") jtHGfYhRYRdqvhiQAAA_
+a user connected
+socket.on("join") jtHGfYhRYRdqvhiQAAA_
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") jtHGfYhRYRdqvhiQAAA_
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("disconnect")
+player disconnected Clark clark clark
+player left: Clark clark clark
+socket.on("disconnect")
+socket.on("connect") QTYq9llDsnAj2DLFAABA
+a user connected
+socket.on("join") QTYq9llDsnAj2DLFAABA
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") wmsIu1jOD3SwFzIiAABB
+a user connected
+socket.on("join") wmsIu1jOD3SwFzIiAABB
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("join") wmsIu1jOD3SwFzIiAABB
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Alex Q
+player left: Alex Q
+socket.on("connect") nIqTa4X_6pJCw-M_AABC
+a user connected
+socket.on("join") nIqTa4X_6pJCw-M_AABC
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") nIqTa4X_6pJCw-M_AABC
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Teo
+player left: Teo
+socket.on("connect") 3Z_LJXNeAfnnqPk4AABD
+a user connected
+socket.on("join") 3Z_LJXNeAfnnqPk4AABD
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") 3Z_LJXNeAfnnqPk4AABD
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("connect") tc8ujCZcwtIWVbPjAABE
+a user connected
+socket.on("join") tc8ujCZcwtIWVbPjAABE
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") tc8ujCZcwtIWVbPjAABE
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("connect") rLyQLMKkhf4vTzUnAABF
+a user connected
+socket.on("join") rLyQLMKkhf4vTzUnAABF
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") rLyQLMKkhf4vTzUnAABF
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") YjbAJM0gg-0TMyADAABG
+a user connected
+socket.on("join") YjbAJM0gg-0TMyADAABG
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("disconnect")
+player disconnected Teo
+player left: Teo
+acting started
+attempting next clue
+start timer.
+socket.on("connect") tntO2WgMPxa0SiCyAABH
+a user connected
+socket.on("join") tntO2WgMPxa0SiCyAABH
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") tntO2WgMPxa0SiCyAABH
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("connect") rC2EjvvSq3t-qvndAABI
+a user connected
+socket.on("join") rC2EjvvSq3t-qvndAABI
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+stop acting
+stop timer.
+Turn ended.
+socket.on("disconnect")
+player disconnected Sony Salzman
+player left: Sony Salzman
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+socket.on("disconnect")
+player disconnected Leah
+player left: Leah
+socket.on("connect") oNaSbFpOKYwZsBBSAABJ
+a user connected
+socket.on("join") oNaSbFpOKYwZsBBSAABJ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") oNaSbFpOKYwZsBBSAABJ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") _wq1adEk6OrFrLnKAABK
+a user connected
+socket.on("join") _wq1adEk6OrFrLnKAABK
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") _wq1adEk6OrFrLnKAABK
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") HD0Bm-1liJdolYngAABL
+a user connected
+socket.on("join") HD0Bm-1liJdolYngAABL
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") HD0Bm-1liJdolYngAABL
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") k5YIvQYadf1WyH5KAABM
+a user connected
+socket.on("join") k5YIvQYadf1WyH5KAABM
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") k5YIvQYadf1WyH5KAABM
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") bjU3hkxbBXYIztc_AABN
+a user connected
+socket.on("join") bjU3hkxbBXYIztc_AABN
+Found player.
+oldSocket k5YIvQYadf1WyH5KAABM
+newSocket bjU3hkxbBXYIztc_AABN
+oldSocket.emit("new-socket")
+socket.on("disconnect")
+player disconnected Clark clark clark
+player left: Clark clark clark
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") cfeqRHmMc2NkKkw9AABO
+a user connected
+socket.on("connect") YMDrcJdaJag0kfqdAABP
+a user connected
+socket.on("join") YMDrcJdaJag0kfqdAABP
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Vitor Petrone
+player left: Vitor Petrone
+socket.on("disconnect")
+socket.on("disconnect")
+player disconnected Clark clark clark
+player left: Clark clark clark
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("disconnect")
+player disconnected Leah
+player left: Leah
+socket.on("connect") o-y6FH5D5-wZop79AABQ
+a user connected
+socket.on("join") o-y6FH5D5-wZop79AABQ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") o-y6FH5D5-wZop79AABQ
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") lpCICxwbiWcLxhj2AABR
+a user connected
+socket.on("join") lpCICxwbiWcLxhj2AABR
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") lpCICxwbiWcLxhj2AABR
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") XLfKJqaVcRXK0g72AABS
+a user connected
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("join") XLfKJqaVcRXK0g72AABS
+Found player.
+oldSocket o-y6FH5D5-wZop79AABQ
+newSocket XLfKJqaVcRXK0g72AABS
+oldSocket.emit("new-socket")
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("connect") yzw4346ymFGHf-bAAABT
+a user connected
+socket.on("join") yzw4346ymFGHf-bAAABT
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Elizabeth
+player left: Elizabeth
+socket.on("disconnect")
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("connect") n4QnzGjq9uhQO7_8AABU
+a user connected
+socket.on("join") n4QnzGjq9uhQO7_8AABU
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("join") n4QnzGjq9uhQO7_8AABU
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("connect") DlG2nrSb7nzLFlrcAABV
+a user connected
+socket.on("join") DlG2nrSb7nzLFlrcAABV
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"
+socket.on("disconnect")
+player disconnected Cormick
+player left: Cormick
+socket.on("connect") nRxE4XIt4RzelFvTAABW
+a user connected
+socket.on("join") nRxE4XIt4RzelFvTAABW
+Found player.
+socket.emit("player-id")
+Subscribe socket to "state-change"

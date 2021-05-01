@@ -159,9 +159,11 @@ export class GameService {
       socket.emit('join', { gameId: this.state.game.id, playerId: this.state.currentPlayerId });
     });
 
-    socket.on('state-change', (game) => {
+    socket.on('state-change', (gameStr) => {
+      const game = JSON.parse(gameStr);
       console.log('socket.on("state-change")');
       console.log('this.setState({ game })');
+      console.log(game);
       this.setState({ game });
     });
 
@@ -187,6 +189,7 @@ export class GameService {
 
     socket.on('new-socket', () => {
       console.log('socket.on("new-socket")');
+      socket.close();
       this.clearState();
       this.router.navigateByUrl('/');
     });

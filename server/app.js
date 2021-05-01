@@ -35,7 +35,12 @@ app.get('/game/:id', (req, res) => {
   }
 
   res.status(200);
-  res.json(game);
+  if (req.query.debug) {
+    return res.json(game.denormalize())
+  }
+
+  res.set('Content-Type', 'application/json')
+  res.send(game.serialize());
 });
 
 app.get('/games', (req, res) => {
@@ -75,7 +80,8 @@ app.post('/game/remove-player', (req, res) => {
   }
   game.removePlayer(player);
   res.status(200);
-  res.send(game);
+  res.set('Content-Type', 'application/json');
+  res.send(game.serialize());
 });
 
 app.post('/game/boot-player', (req, res) => {
@@ -123,16 +129,20 @@ io.on('connection', function(socket){
   console.log('socket.on("connect")', socket.id);
   state.sockets[socket.id] = socket;
   let game;
+  let subscription;
 
-  const updateClient = () => {
-    socket.to(game.id).emit('state-change', game);
-    socket.emit('state-change', game);
+  const updateClient = (state) => {
+    console.log('socket.emit("state-change")');
+    console.log(state);
+    console.log('game.players', game.players)
+    socket.to(game.id).emit('state-change', state);
+    socket.emit('state-change', state);
   }
 
   console.log('a user connected');
 
   socket.on('join', ({ gameId, playerName, playerId }) => {
-       console.log('socket.on("join")', socket.id);
+       console.log('socket.on("join")', "socketId:", socket.id, "gameId:", gameId, "playerName:", playerName);
        game = state.games[gameId];
        if (!game) { console.log('Game not found.'); return socket.emit('game-not-found'); }
        let player = game.players[playerId];
@@ -149,6 +159,7 @@ io.on('connection', function(socket){
        } else if (playerName) {
         console.log('Creating new player...');
         player = new Player(playerName);
+        console.log(player);
        } else {
         console.log('Player not found. Clearing old player id.');
         return socket.emit('player-not-found');
@@ -160,7 +171,7 @@ io.on('connection', function(socket){
        state.players[player.id] = player;
        socket.join(gameId);
        console.log('Subscribe socket to "state-change"');
-       game.events.on('state-change', updateClient)
+       subscription = game.events.subscribe(updateClient);
        game.addPlayer(player);
   });
 
@@ -180,7 +191,7 @@ io.on('connection', function(socket){
     if (game && player) {
       console.log('player disconnected', player.name);
       game.removePlayer(player, socket.id);
-      game.events.removeListener('state-change', updateClient);
+      subscription && subscription.unsubscribe();
       delete state.players[player.id];
     }
     delete state.sockets[socket.id];

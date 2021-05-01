@@ -19,6 +19,19 @@ class Team {
     }
   }
 
+  firstPlayerId(game) {
+    for (let i = 0; i < this.playerIds.length; i++) {
+      const playerId = this.playerIds[this.currentPlayerIndex];
+      const player = game.get('player', playerId);
+
+      if (player && player.status === 'playing') { return playerId; }
+
+      this.currentPlayerIndex = nextIndex(this.playerIds, this.currentPlayerIndex);
+    }
+
+    return null;
+  }
+
   nextPlayer(game) {
     const playerIds = this.playerIds.filter(id => game.players[id].status === 'playing');
     const index = nextIndex(this.playerIds, this.currentPlayerIndex);

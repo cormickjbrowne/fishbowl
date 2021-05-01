@@ -1,10 +1,10 @@
-const EventEmitter = require('events');
 const { generateHash, getRandom, last, nextIndex, indexById } = require('../utils');
 const { Round } = require('./round');
 const { Team } = require('./team');
 const { Clue } = require('./clue');
 const { Turn } = require('./turn');
 const { Attempt } = require('./attempt');
+const { Subject } = require('rxjs');
 
 const NUM_CLUES = 4;
 const NUM_TEAMS = 2;
@@ -20,7 +20,7 @@ class Game {
       this.currentTurnId = null;
       this.currentClueId = null;
 
-      const rounds = ['taboo', 'charades', 'one-word', 'sheet'].map(type => new Round(type));
+      const rounds = ['taboo', 'charades', 'one-word'].map(type => new Round(type));
       this.roundIds = rounds.map(round => round.id);
       this.currentRoundIndex = 0;
       this.rounds = indexById(rounds);
@@ -36,11 +36,16 @@ class Game {
       this.attempts = {};
 
       this.timeRemaining = NUM_SECONDS_PER_TURN;
-      this.events = new EventEmitter();
+      this.events = new Subject();
+  }
+
+  serialize() {
+    const replacer = (key, value) => typeof value === 'function' || key === 'events' ? undefined : value;
+    return JSON.stringify(this, replacer);
   }
 
   emitStateChange() {
-    this.events.emit('state-change');
+    this.events.next(this.serialize());
   }
 
   add(type, instance) {
@@ -82,14 +87,18 @@ class Game {
   }
 
   addPlayer(player) {
+    console.log('game.addPlayer()');
     if (this.players[player.id]) {
+      console.log('this.players[player.id]:', this.players[player.id]);
       player.rejoinGame();
     } else {
       const team = this.getTeamWithLeastPlayers();
+      console.log('team.addPlayer()');
       team.addPlayer(player);
       player.joinTeam(team.id);
       player.joinGame(this.id);
       this.players[player.id] = player;
+      console.log('this.players', this.players);
     }
     this.emitStateChange();
   }
@@ -197,7 +206,7 @@ class Game {
   startGame() {
     console.log('start game');
     this.status = 'ready-to-act';
-    this.currentActorId = this.teams[this.teamIds[0]].playerIds[0];
+    this.currentActorId = this.teams[this.teamIds[0]].firstPlayerId(this);
     this.emitStateChange();
   }
 
@@ -248,7 +257,7 @@ class Game {
     this.status = 'ready-to-act';
     this.timeRemaining = NUM_SECONDS_PER_TURN;
     this.nextPlayer();
-    this.events.emit('state-change', this);
+    this.emitStateChange();
   }
 
   attemptNextClue() {
@@ -281,7 +290,7 @@ class Game {
   }
 
   clueGuessed() {
-    if (this.game.status !== 'acting') { return; }
+    if (this.status !== 'acting') { return; }
     console.log('clue guessed');
     const attempt = this.getCurrentAttempt();
     attempt.guessed();
@@ -290,7 +299,7 @@ class Game {
   }
 
   clueSkipped() {
-    if (this.game.status !== 'acting') { return; }
+    if (this.status !== 'acting') { return; }
     console.log('clue skipped');
     const attempt = this.getCurrentAttempt();
     attempt.skipped();
@@ -303,7 +312,7 @@ class Game {
     const isLastRound = this.currentRoundIndex === this.roundIds.length - 1;
     if (isLastRound) {
       this.status = 'game-over';
-      this.events.emit('state-change', this);
+      this.emitStateChange();
       return;
     }
 
@@ -341,8 +350,10 @@ class Game {
     return {
       name: this.id,
       players: Object.values(this.players).map(player => ({
+        id: player.id,
         name: player.name,
-        team: this.teams[player.teamId].name
+        team: this.teams[player.teamId].name,
+        status: player.status
       })),
       rounds: this.roundIds.map(roundId => {
         const round = this.rounds[roundId];
